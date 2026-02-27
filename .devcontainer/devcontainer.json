@@ -1,14 +1,12 @@
 {
-    "name": "Python Data Science (Stable)",
-    "build": {
-        "dockerfile": "Dockerfile",
-        "context": "."
-    },
+    "name": "Master Stats Python",
+    "image": "python:3.11-bookworm",
     "customizations": {
         "vscode": {
             "settings": {
-                "python.defaultInterpreterPath": "/opt/conda/bin/python",
-                "jupyter.notebookEditor.defaultKernel": "python3"
+                "python.defaultInterpreterPath": "/workspaces/master_stats/.venv/bin/python",
+                "python.terminal.activateEnvInSelectedTerminal": true,
+                "jupyter.notebookEditor.defaultKernel": "venv"
             },
             "extensions": [
                 "ms-python.python",
@@ -17,6 +15,12 @@
             ]
         }
     },
-    "remoteUser": "vscode",
-    "postCreateCommand": "pip install -r requirements.txt || echo 'No requirements.txt found'"
+    "remoteUser": "root",
+    "postCreateCommand": {
+        "git-safe": "git config --global --add safe.directory /workspaces/master_stats",
+        "setup-venv": "python -m venv .venv",
+        "install-deps": ". .venv/bin/activate && pip install --upgrade pip && pip install ipykernel pandas numpy",
+        "register-kernel": ". .venv/bin/activate && python -m ipykernel install --user --name venv --display-name 'Python 3.11 (venv)'",
+        "auto-activate": "echo 'source /workspaces/master_stats/.venv/bin/activate' >> ~/.bashrc"
+    }
 }
