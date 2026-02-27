@@ -19,7 +19,7 @@
     "postCreateCommand": {
         "git-safe": "git config --global --add safe.directory /workspaces/master_stats",
         "setup-venv": "python -m venv .venv",
-        "install-deps": ". .venv/bin/activate && pip install --upgrade pip && pip install ipykernel pandas numpy",
+        "install-deps": ". .venv/bin/activate && pip install --upgrade pip && pip install -r requirements.txt",
         "register-kernel": ". .venv/bin/activate && python -m ipykernel install --user --name venv --display-name 'Python 3.11 (venv)'",
         "auto-activate": "echo 'source /workspaces/master_stats/.venv/bin/activate' >> ~/.bashrc"
     }
